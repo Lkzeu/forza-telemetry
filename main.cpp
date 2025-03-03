@@ -14,11 +14,11 @@ int main() {
    lZeroMemory(packet.payload, bufferSize);
 
    auto car = reinterpret_cast<carTelemetry*>(packet.payload);
-   auto network = NetworkFactory::createNetwork();
+   std::unique_ptr<Network> network = NetworkFactory::createNetwork();
 
    int bytesRecv = 0;
    network->recv(packet.payload, bufferSize, bytesRecv);
 
-   std::cout << "well... a lot of work TODO\n";
+   std::cout << "ahaell... a lot of work TODO\n";
    return 0;
 }

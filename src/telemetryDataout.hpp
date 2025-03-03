@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace constant {
-   inline constexpr std::uint16_t fudp_dash_size = 331;
+   inline constexpr std::uint16_t fudp_dash_size = 332;
 }
 
 struct alignas(float) udpPacket {
