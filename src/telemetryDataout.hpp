@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <cstring>
 
 namespace constant {
    inline constexpr std::uint16_t fudp_dash_size = 332;
@@ -7,6 +8,10 @@ namespace constant {
 
 struct alignas(float) udpPacket {
    char payload[constant::fudp_dash_size];
+
+   udpPacket() {
+      std::memset(payload, 0, constant::fudp_dash_size);
+   }
 };
 
 struct alignas(float) carTelemetry {

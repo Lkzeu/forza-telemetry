@@ -9,10 +9,14 @@ public:
    wSocket();
    ~wSocket() override;
    bool createSocket(
-      const char* address, const int port) override;
-   bool recv(char* buffer, int size, int& bytesRecv) override;
+      const char* address, const char* port) override;
+   bool receive(char* buffer, int size, int& bytesRecv) override;
 
 private:
-   bool init();
+   WSAData wsaData_;
+   bool hasinitWSA_ = false;
+   SOCKET socket_   = INVALID_SOCKET;
+
+   void initWSA();
 
 };
