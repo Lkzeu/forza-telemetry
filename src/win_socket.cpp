@@ -51,7 +51,7 @@ bool wSocket::createSocket(const char* address, const char* port) {
 
 bool wSocket::receive(char* buffer, int size, int& bytesRecv) {
    bytesRecv = recv(socket_, buffer, size - 1, 0); // don't care who sent the packet
-   if (bytesRecv < 0) {
+   if (bytesRecv == SOCKET_ERROR) {
       throw std::system_error(WSAGetLastError(), std::system_category(), "recv failed");
    }
    return true;
@@ -65,9 +65,12 @@ void wSocket::initWSA() {
       throw std::system_error(result, std::system_category(), "WSAStartup failed");
    }
 
-   hasinitWSA_ = true;
-
    if (LOBYTE(wsaData_.wVersion) != 2 || HIBYTE(wsaData_.wVersion) != 2) {
+      // Clean up if WSAStartup failed, because if the object is not constructed, 
+      // the destructor will not be called to cleanup.
+      WSACleanup();
       throw std::runtime_error("Wrong version of winsock.dll, must be 2.2");
    }
+
+   hasinitWSA_ = true;
 }
